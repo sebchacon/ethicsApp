@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ConfirmAnswer: View {
-    @State private var For = "Write me an ethical response for the question: "
+    @State private var For = "Write me an ethical response in favor of the question: "
     @State private var Against = "Write me an ethical response against the question: "
     @State private var Neutral = "Write me a neutral ethical response for the question: "
     

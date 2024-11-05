@@ -17,9 +17,10 @@
 import SwiftUI
 
 struct GetAnswer: View {
-    //@State static var finalQuestion = ""
-    @State private var response = ""
     var finalQuestion: String
+    
+    @State private var answer = ""
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -35,7 +36,7 @@ struct GetAnswer: View {
                 .offset(x: 80, y: -50)
                 
                 ScrollView {
-                    Text("Get Answer Here...")
+                    Text(answer)
                         .frame(width: 200, alignment: .leading)
                 }
                 .frame(height: 130)
@@ -76,15 +77,26 @@ struct GetAnswer: View {
                 //.offset(x: 0, y: -170)
                 
             }
+            .onAppear {
+                generateResponse(finalQuestion: finalQuestion)
+            }
         }
     }
     
     func generateResponse(finalQuestion: String){
-        response = "Get Answer here..."
+        
+        /*
+         Here is where the ChatGPT stuff needs to go.
+         
+         finalQuestion is the question that ChatGPT needs to answer. It is all good to go, so no formatting should be necessary.
+         
+         self.answer is where the ChatGPT output needs to go, so just set self.answer to the output
+         
+         */
+        self.answer = "Get Answer Here..."
     }
 }
 
 #Preview {
-    //GetAnswer(finalQuestion: "Your Question Here...")
-    GetAnswer(finalQuestion: "This is a long question. " + String(repeating: "More text. ", count: 20))
-}
+    GetAnswer(finalQuestion: "Your Question Here... (Click and drag to scroll)")
+    }
