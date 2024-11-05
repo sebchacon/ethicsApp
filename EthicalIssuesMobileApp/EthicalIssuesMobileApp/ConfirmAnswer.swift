@@ -47,7 +47,7 @@ struct ConfirmAnswer: View {
                     
                 }
                 //.offset(x: -140, y: -390)
-                .offset(x: -140, y: -500)
+                .offset(x: -150, y: -500)
                 
                 
                 

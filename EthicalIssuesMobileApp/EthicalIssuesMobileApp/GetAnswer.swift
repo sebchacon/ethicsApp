@@ -10,7 +10,7 @@
 /*
         finalQuestion is what needs to be put into ChatGPT.
         It follows the format "Write me an ethical response for/against
-        the following question: ......
+        the following question: (user input here)
 */
 
 
