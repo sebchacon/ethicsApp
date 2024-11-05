@@ -5,21 +5,48 @@
 //  Created by Owen Tushan on 10/28/24.
 //
 
+
+
+/*
+        finalQuestion is what needs to be put into ChatGPT.
+        It follows the format "Write me an ethical response for/against
+        the following question: ......
+*/
+
+
 import SwiftUI
 
 struct GetAnswer: View {
+    //@State static var finalQuestion = ""
+    @State private var response = ""
+    var finalQuestion: String
     var body: some View {
         NavigationView {
             VStack {
-                Text("Question here...")
-                    .offset(x: 100, y: -120)
                 
-                Text("Get answer here...")
-                    .offset(x: -100, y: 50)
+                ScrollView {
+                    Text(finalQuestion)
+                        .multilineTextAlignment(.leading)
+                        .frame(width: 200, alignment: .leading)
+                }
+                .frame(height: 130)
+                .padding()
+                .border(.black)
+                .offset(x: 80, y: -50)
+                
+                ScrollView {
+                    Text("Get Answer Here...")
+                        .frame(width: 200, alignment: .leading)
+                }
+                .frame(height: 130)
+                .padding()
+                .border(.black)
+                .offset(x: -80, y: -0)
                 
                 Divider()
                     .overlay(Color.black)
-                    .offset(y: -265)
+                    .offset(y: -440)
+                    //.offset(y: -590)
                 
                 NavigationLink(destination: AskQuestion().navigationBarBackButtonHidden(true)){
                     
@@ -29,47 +56,15 @@ struct GetAnswer: View {
                         .frame(width: 35.0, height: 35.0)
                     
                 }
-                .offset(x: -140, y: -330)
-                
+                .offset(x: -140, y: -510)
+                //.offset(x: -140, y: -660)
                 
                 
                 Divider()
                     .overlay(Color.black)
-                    .offset(y: 125)
+                    .offset(y: -30)
+                    //.offset(y: -200)
                 
-                Divider()
-                    .overlay(Color.black)
-                    .offset(y: 250)
-                
-                HStack {
-                    Button ("For"){
-                        
-                    }
-                    .foregroundColor(.white)
-                    .frame(width: 100, height: 50)
-                    .background(Color.green)
-                    .cornerRadius(10)
-                    .offset(x: -20, y: 150)
-                    
-                    Button ("Neutral"){
-                        
-                    }
-                    .foregroundColor(.white)
-                    .frame(width: 100, height: 50)
-                    .background(Color.yellow)
-                    .cornerRadius(10)
-                    .offset(x: 0, y: 150)
-                    
-                    Button ("Against"){
-                        
-                    }
-                    .foregroundColor(.white)
-                    .frame(width: 100, height: 50)
-                    .background(Color.red)
-                    .cornerRadius(10)
-                    .offset(x: 20, y: 150)
-                    
-                }
                 
                 NavigationLink(destination: ChatHistory().navigationBarBackButtonHidden(true)){
                     Text("View History")
@@ -77,13 +72,19 @@ struct GetAnswer: View {
                 .foregroundColor(.black)
                 .padding()
                 .border(.black)
-                .offset(x: 0, y: 225)
+                .offset(x: 0, y: 0)
+                //.offset(x: 0, y: -170)
                 
             }
         }
     }
+    
+    func generateResponse(finalQuestion: String){
+        response = "Get Answer here..."
+    }
 }
 
 #Preview {
-    GetAnswer()
+    //GetAnswer(finalQuestion: "Your Question Here...")
+    GetAnswer(finalQuestion: "This is a long question. " + String(repeating: "More text. ", count: 20))
 }

@@ -51,9 +51,11 @@ struct AskQuestion: View {
                     .cornerRadius(10)
                     .offset(y: 0)
                 
-                NavigationLink(destination: GetAnswer().navigationBarBackButtonHidden(true), isActive: $isNotBlank){
+                
+                NavigationLink(destination: ConfirmAnswer(question: question).navigationBarBackButtonHidden(true), isActive: $isNotBlank){
                     
                 }
+                
                 
                 NavigationLink(destination: ChatHistory().navigationBarBackButtonHidden()){
                     HStack{
@@ -67,6 +69,7 @@ struct AskQuestion: View {
                    
                 }
                 .offset(x: 0, y: 50)
+                
                 
             }
         }

@@ -14,6 +14,9 @@ struct ContentView: View {
     @State private var wrongPassword = 0
     @State private var showLoginScreen = false
     
+    @State private var showEmailError = false
+    @State private var showPasswordError = false
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -35,6 +38,7 @@ struct ContentView: View {
                     
                     TextField("Username", text: $username)
                         .padding()
+                        .textInputAutocapitalization(.never)
                         .frame(width: 250, height: 50)
                         .background(Color.black.opacity(0.04))
                         .cornerRadius(10)
@@ -43,11 +47,13 @@ struct ContentView: View {
                     
                     SecureField("Password", text: $password)
                         .padding()
+                        .textInputAutocapitalization(.never)
                         .frame(width: 250, height: 50)
                         .background(Color.black.opacity(0.04))
                         .cornerRadius(10)
                         .border(.red, width: CGFloat(wrongPassword))
                         .offset(y: -40)
+                    
                     
                     Button ("Login"){
                         authenticateUser(username: username, password: password)
@@ -59,9 +65,8 @@ struct ContentView: View {
                     .offset(y: -20)
                     
                     //this NavigationLink works for the Login button
-                    NavigationLink(destination: AskQuestion().navigationBarBackButtonHidden(true), isActive: $showLoginScreen){
-                        
-                    }
+                    NavigationLink(destination: AskQuestion().navigationBarBackButtonHidden(true), isActive: $showLoginScreen){}
+                    
                     
                     
                     NavigationLink(destination: ForgotPassword().navigationBarBackButtonHidden(true)){
@@ -98,7 +103,7 @@ struct ContentView: View {
         if username.lowercased() == "testuser@test.com"{
             wrongUsername = 0
             //set to 0 because nothing is wrong
-            if password.lowercased() == "testpassword"{
+            if password == "Testpassword"{
                 wrongPassword = 0
                 showLoginScreen = true
             }
