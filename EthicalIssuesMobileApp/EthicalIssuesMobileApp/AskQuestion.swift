@@ -18,7 +18,7 @@ struct AskQuestion: View {
     
     @State static var rand3 = "Is it ethical to reverse-engineer or bypass software protections to use a product in unintended ways?"
     
-    @State static var rand4 = "Is it ethical for governments to use mass surveillence in the name of national security?"
+    @State static var rand4 = "Is it ethical for governments to use mass surveillance in the name of national security?"
     
     let randomInt = Int.random(in: 0..<4)
     let randomQuestion = [rand1, rand2, rand3, rand4]
