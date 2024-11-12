@@ -9,6 +9,14 @@ def init_database():
     cursor = connection.cursor()
 
     cursor.execute('''
+        CREATE TABLE IF NOT EXISTS data (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            key TEXT UNIQUE,
+            value TEXT
+        )
+    ''')
+    
+    cursor.execute('''
         INSERT OR IGNORE INTO data (key, value) VALUES (?, ?)
     ''', ("TestUser", "TestPassword"))
 
