@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct ContentView: View {
     @State private var username = ""
@@ -112,8 +113,9 @@ struct ContentView: View {
         
     }
     
-    func authenticateUser(username: String, password: String){
+    func authenticateUser(username: String, password: String) {
 //Need to insert our database logic here
+        /*
         if username.lowercased() == "testuser@test.com"{
             wrongUsername = 0
             emailError = ""
@@ -134,7 +136,83 @@ struct ContentView: View {
             emailError = "Invalid Username"
             //set to 2 so the username box turns red
         }
+        */
         
+        AuthService.authenticate(username: username, password: password) { result in
+            switch result {
+            case .success(let isSuccess):
+                if isSuccess {
+                // Login successful, show the next screen
+                    showLoginScreen = true
+                    emailError = ""
+                    passwordError = ""
+                    wrongUsername = 0
+                    wrongPassword = 0
+                }
+                else {
+                // Invalid credentials, show error messages
+                    wrongUsername = 2
+                    wrongPassword = 2
+                    emailError = "Invalid Username"
+                    passwordError = "Invalid Password"
+                }
+            case .failure(let error):
+            // Network error, show a generic error message
+                emailError = "Server connection error"
+                passwordError = ""
+                wrongUsername = 2
+                wrongPassword = 2
+            }
+        }
+    }
+}
+
+class AuthService {
+    static func authenticate(username: String, password: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        // Replace with your server URL
+        guard let url = URL(string: "http://localhost:8080/login") else {
+            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // Create a dictionary of the username and password
+        let body = [
+            "username": username,
+            "password": password
+        ]
+        
+        // Convert the dictionary to JSON data
+        do {
+            let encoder = JSONEncoder()
+            let jsonData = try encoder.encode(body)
+            request.httpBody = jsonData
+        } catch {
+            completion(.failure(error))
+            return
+        }
+        
+        // Make the request to the server
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            // Check the response status code
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                // Success
+                completion(.success(true))
+            } else {
+                // Failure, invalid username or password
+                completion(.success(false))
+            }
+        }
+        
+        task.resume()
     }
 }
 
