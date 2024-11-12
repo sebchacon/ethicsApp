@@ -115,7 +115,7 @@ struct ContentView: View {
     
     func authenticateUser(username: String, password: String) {
 //Need to insert our database logic here
-        /*
+        
         if username.lowercased() == "testuser@test.com"{
             wrongUsername = 0
             emailError = ""
@@ -136,8 +136,8 @@ struct ContentView: View {
             emailError = "Invalid Username"
             //set to 2 so the username box turns red
         }
-        */
         
+        /*
         AuthService.authenticate(username: username, password: password) { result in
             switch result {
             case .success(let isSuccess):
@@ -164,13 +164,14 @@ struct ContentView: View {
                 wrongPassword = 2
             }
         }
+        */
     }
 }
 
 class AuthService {
     static func authenticate(username: String, password: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         // Replace with your server URL
-        guard let url = URL(string: "http://localhost:8080/login") else {
+        guard let url = URL(string: "http://localhost:12345") else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
             return
         }
