@@ -17,6 +17,10 @@ struct CreateAccount: View {
     @State private var newEmail = ""
     @State private var newPassword = ""
     
+    //variables that will display error messages
+    @State private var emailError = ""
+    @State private var passwordError = ""
+    
     //our variables to make sure email/password fields are filled out correctly
     @State private var usedEmail = 0
     @State private var passwordDNM = 0
@@ -52,14 +56,22 @@ struct CreateAccount: View {
                 
                 TextField("Email", text: $email)
                     .padding()
+                    .textInputAutocapitalization(.never)
                     .frame(width: 350, height: 50)
                     .background(Color.black.opacity(0.04))
                     .cornerRadius(5)
                     .border(.red, width: CGFloat(usedEmail))
                     .offset(x: 0, y: -130)
                 
+                    .overlay(
+                        Text(emailError)
+                            .foregroundColor(.red)
+                            .offset(x: -90, y: -85)
+                    )
+                
                 SecureField("Password", text: $passwordOne)
                     .padding()
+                    .textInputAutocapitalization(.never)
                     .frame(width: 350, height: 50)
                     .background(Color.black.opacity(0.04))
                     .cornerRadius(5)
@@ -68,11 +80,18 @@ struct CreateAccount: View {
                 
                 SecureField("Password", text: $passwordTwo)
                     .padding()
+                    .textInputAutocapitalization(.never)
                     .frame(width: 350, height: 50)
                     .background(Color.black.opacity(0.04))
                     .cornerRadius(5)
                     .border(.red, width: CGFloat(passwordDNM))
                     .offset(x: 0, y: 10)
+                
+                    .overlay(
+                        Text(passwordError)
+                            .foregroundColor(.red)
+                            .offset(x: -80, y: -70)
+                    )
                 
                 Button ("Create New Account"){
                     createNewAccount(email: email, passwordOne: passwordOne, PasswordTwo: passwordTwo)
@@ -94,24 +113,40 @@ struct CreateAccount: View {
     func createNewAccount(email: String, passwordOne: String, PasswordTwo: String){
         
         //make sure passwords match
-        if(passwordOne == passwordTwo && passwordOne != ""){
-            passwordDNM = 0
-            passwordMatch = true
+        if(passwordOne != "" || passwordTwo != ""){
+            if(passwordOne == passwordTwo){
+                passwordDNM = 0
+                passwordError = ""
+                passwordMatch = true
+            }
+            else{           //passwords do not match
+                passwordDNM = 2
+                passwordError = "Passwords do not match"
+                passwordMatch = false
+            }
         }
-        else{
+        else{                //both passwords are blank
             passwordDNM = 2
-            passwordMatch = false
+            passwordError = "Please enter a password"
         }
         
 //Needs database functionality
         //Check to make sure email isn't already in use
-        if(email.lowercased() != "testuser@test.com" && email.lowercased() != ""){
-            usedEmail = 0
-            emailAlreadyUsed = true
+        if(email != ""){
+            if(email.lowercased() != "testuser@test.com"){
+                usedEmail = 0
+                emailError = ""
+                emailAlreadyUsed = true
+            }
+            else{
+                usedEmail = 2
+                emailError = "Email is already in use"
+                emailAlreadyUsed = false
+            }
         }
         else{
             usedEmail = 2
-            emailAlreadyUsed = false
+            emailError = "Please enter an email "
         }
         
 //Needs database functionality

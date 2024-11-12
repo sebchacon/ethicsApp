@@ -11,6 +11,8 @@ struct ChangePasswordOne: View {
     @State private var email = ""
     @State private var wrongEmail = 0
     @State private var resetPassword = false
+    
+    @State private var emailError = ""
     var body: some View {
         NavigationView {
             VStack {
@@ -32,19 +34,27 @@ struct ChangePasswordOne: View {
                     .multilineTextAlignment(.center)
                 
                 Text("Please Enter the email associated with your account. We will then direct you to a page to change your password.")
+                    .frame(width: 300)
                     .offset(x: 0, y: -150)
                     .multilineTextAlignment(.center)
                 
-                Text("email")
-                    .offset(x: -150, y: -90)
+                Text("Email")
+                    .offset(x: -148, y: -90)
                 
                 TextField("Email", text: $email)
                     .padding()
+                    .textInputAutocapitalization(.never)
                     .frame(width: 350, height: 50)
                     .background(Color.black.opacity(0.04))
                     .cornerRadius(5)
                     .border(.red, width: CGFloat(wrongEmail))
                     .offset(x: 0, y: -80)
+                
+                    .overlay(
+                        Text(emailError)
+                            .foregroundColor(.red)
+                            .offset(x: -90, y: -40)
+                    )
                 
                 Button ("Change Password"){
                     authenticateEmail(email: email)
@@ -53,7 +63,7 @@ struct ChangePasswordOne: View {
                     .frame(width: 200, height: 50)
                     .background(Color.blue)
                     .cornerRadius(10)
-                    .offset(y: -60)
+                    .offset(y: -50)
                 
                 NavigationLink(destination: ChangePasswordTwo().navigationBarBackButtonHidden(true), isActive: $resetPassword){
                     
@@ -68,12 +78,20 @@ struct ChangePasswordOne: View {
     func authenticateEmail(email: String){
 //Needs database functionality
         //If username is in databse
-        if(email.lowercased() == "testuser@test.com"){
-            wrongEmail = 0
-            resetPassword = true
+        if(email.lowercased() != ""){
+            if(email.lowercased() == "testuser@test.com"){
+                wrongEmail = 0
+                emailError = ""
+                resetPassword = true
+            }
+            else{
+                wrongEmail = 2
+                emailError = "Invalid email                "
+            }
         }
         else{
             wrongEmail = 2
+            emailError = "Please enter an email"
         }
     }
 }

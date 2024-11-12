@@ -13,6 +13,8 @@ struct ChangePasswordTwo: View {
     @State private var passwordDNM = 0
     @State private var passwordMatch = false
     
+    @State private var passwordError = ""
+    
     //This variable is unused, but would be used with database functionality
     @State private var newPassword = ""
     var body: some View {
@@ -27,6 +29,7 @@ struct ChangePasswordTwo: View {
                 
                 SecureField("Password", text: $passwordOne)
                     .padding()
+                    .textInputAutocapitalization(.never)
                     .frame(width: 350, height: 50)
                     .background(Color.black.opacity(0.04))
                     .cornerRadius(5)
@@ -35,11 +38,18 @@ struct ChangePasswordTwo: View {
                 
                 SecureField("Password", text: $passwordTwo)
                     .padding()
+                    .textInputAutocapitalization(.never)
                     .frame(width: 350, height: 50)
                     .background(Color.black.opacity(0.04))
                     .cornerRadius(5)
                     .border(.red, width: CGFloat(passwordDNM))
                     .offset(x: 0, y: 0)
+                
+                    .overlay(
+                        Text(passwordError)
+                            .foregroundColor(.red)
+                            .offset(x: -80, y: -80)
+                    )
                 
                 Text("Enter New Password")
                     .offset(x: -93, y: -230)
@@ -66,14 +76,22 @@ struct ChangePasswordTwo: View {
     
     func authenticatePasswordMatch(passwordOne: String, passwordTwo: String){
 //Needs database functionality
-        if(passwordOne == passwordTwo && passwordOne != ""){
-            passwordDNM = 0
-            newPassword = passwordOne
-            //insert newPassword into database
-            passwordMatch = true
+        if(passwordOne != "" || passwordTwo != ""){
+            if(passwordOne == passwordTwo){
+                passwordDNM = 0
+                passwordError = ""
+                newPassword = passwordOne
+                //insert newPassword into database
+                passwordMatch = true
+            }
+            else{
+                passwordDNM = 2
+                passwordError = "Passwords do not match"
+            }
         }
-        else{
+        else{                   //passwords are blank
             passwordDNM = 2
+            passwordError = "Please enter a password"
         }
     }
 }

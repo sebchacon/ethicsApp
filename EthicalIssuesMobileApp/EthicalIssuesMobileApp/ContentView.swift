@@ -14,8 +14,8 @@ struct ContentView: View {
     @State private var wrongPassword = 0
     @State private var showLoginScreen = false
     
-    @State private var showEmailError = false
-    @State private var showPasswordError = false
+    @State private var emailError = ""
+    @State private var passwordError = ""
     
     var body: some View {
         NavigationView {
@@ -45,6 +45,13 @@ struct ContentView: View {
                         .border(.red, width: CGFloat(wrongUsername))
                         .offset(y: -50)
                     
+                        .overlay(
+                            Text(emailError)
+                                .foregroundColor(.red)
+                                .offset(x: -60, y: -90)
+                            
+                        )
+                    
                     SecureField("Password", text: $password)
                         .padding()
                         .textInputAutocapitalization(.never)
@@ -53,6 +60,12 @@ struct ContentView: View {
                         .cornerRadius(10)
                         .border(.red, width: CGFloat(wrongPassword))
                         .offset(y: -40)
+                    
+                        .overlay(
+                            Text(passwordError)
+                                .foregroundColor(.red)
+                                .offset(x: -60, y: -0)
+                        )
                     
                     
                     Button ("Login"){
@@ -63,6 +76,7 @@ struct ContentView: View {
                     .background(Color.blue)
                     .cornerRadius(10)
                     .offset(y: -20)
+                    
                     
                     //this NavigationLink works for the Login button
                     NavigationLink(destination: AskQuestion().navigationBarBackButtonHidden(true), isActive: $showLoginScreen){}
@@ -102,18 +116,22 @@ struct ContentView: View {
 //Need to insert our database logic here
         if username.lowercased() == "testuser@test.com"{
             wrongUsername = 0
+            emailError = ""
             //set to 0 because nothing is wrong
             if password == "Testpassword"{
                 wrongPassword = 0
+                passwordError = ""
                 showLoginScreen = true
             }
             else{
                 wrongPassword = 2
+                passwordError = "Invalid Password"
                 //set to 2 so the password box turns red
             }
         }
         else{
             wrongUsername = 2
+            emailError = "Invalid Username"
             //set to 2 so the username box turns red
         }
         

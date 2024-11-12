@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5E0F12BE2CE15EEE002C807F /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 5E0F12BD2CE15EEE002C807F /* OpenAI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		5E0FF8972CD053E600D61683 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E0F12BE2CE15EEE002C807F /* OpenAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = EthicalIssuesMobileApp;
 			packageProductDependencies = (
+				5E0F12BD2CE15EEE002C807F /* OpenAI */,
 			);
 			productName = EthicalIssuesMobileApp;
 			productReference = 5E0FF8862CD053E500D61683 /* EthicalIssuesMobileApp.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 5E0FF87D2CD053E500D61683;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5E0F12BC2CE15E9E002C807F /* XCRemoteSwiftPackageReference "OpenAI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5E0FF8872CD053E500D61683 /* Products */;
 			projectDirPath = "";
@@ -552,6 +561,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5E0F12BC2CE15E9E002C807F /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5E0F12BD2CE15EEE002C807F /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5E0F12BC2CE15E9E002C807F /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5E0FF87E2CD053E500D61683 /* Project object */;
 }
